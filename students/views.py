@@ -62,11 +62,19 @@ def student_list051(request):
     print(connection.queries)
     return render(request, 'output.html', {'posts': obj})
 
-def student_list(request):
+def student_list052(request):
     obj = Student.objects.filter(~Q(age__gt=30) & ~Q(surname__startswith='ahmed'))
     print(obj.query)
     print(connection.queries)
     return render(request, 'output.html', {'posts': obj})
+
+#part06
+def student_list(request):
+    obj = Student.objects.filter(classroom=6).only('firstname')
+    print(obj.query)
+    print(connection.queries)
+    return render(request, 'output.html', {'data': obj})
+
 
 
 
