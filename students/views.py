@@ -13,7 +13,9 @@ def student_list_(request):
     return render(request, 'output.html', {'posts': obj})
 
 def student_list(request):
-    obj = Student.objects.filter(surname__startswith='ahmed') | Student.objects.filter(surname__startswith='habib')
+    # obj = Student.objects.filter(surname__startswith='ahmed') | Student.objects.filter(surname__startswith='habib')
+    # obj = Student.objects.filter(Q(surname__startswith='ahmed') | Q(surname__startswith='habib') | Q(surname__startswith='haldar'))
+    obj = Student.objects.filter(Q(surname__startswith='ahmed') | ~Q(surname__startswith='habib') | Q(surname__startswith='haldar'))
     print(obj)
     print(obj.query)
     print(connection.queries)
