@@ -1,3 +1,6 @@
+from ast import GtE, LtE
+from calendar import day_abbr, month
+from operator import contains, lt
 import re
 from django.shortcuts import render
 from .models import Student, Teacher
@@ -77,8 +80,8 @@ def student_list06(request):
 
 
 #part07
-def student_list(request):
-    # obj = Student.objects.all()
+def student_list07(request):
+    obj = Student.objects.all()
     # posts = Student.objects.raw("SELECT * FROM students_student WHERE age=35 ")
     
     # for s in Student.objects.raw("SELECT * FROM students_student WHERE age=35"):
@@ -94,6 +97,53 @@ def student_list(request):
     # print(connection.queries)
     # print(obj)
     return render(request, 'output.html', {'data': obj})
+
+
+#part08
+
+
+def dictfetchall(cursor):
+    "Return all rows from a cursor as a dict"
+    columns = [col[0] for col in cursor.description]
+    return [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+    ]
+
+
+
+def student_list(request):
+    #bypassing orm 
+    cursor = connection.cursor()
+    # cursor.execute("SELECT * FROM students_student")
+    cursor.execute("SELECT * FROM students_student WHERE age > 20")
+    # r = cursor.fetchone()
+    r = dictfetchall(cursor)
+    print(r)
+    print(connection.queries)
+    return render(request, 'output.html', {'data': r})
+
+# exact
+# iexact
+# contains
+# icontains
+# in 
+# gt 
+# lt
+# lte
+# startswith
+# istartswith
+# endswith
+# iendswith
+# range
+# year
+# month
+# day
+# week_day
+# isnull
+# search
+# regex
+# iregex
 
 
 
