@@ -78,9 +78,21 @@ def student_list06(request):
 
 #part07
 def student_list(request):
-    obj = Student.objects.all()
-    print(obj.query)
-    print(connection.queries)
+    # obj = Student.objects.all()
+    # posts = Student.objects.raw("SELECT * FROM students_student WHERE age=35 ")
+    
+    # for s in Student.objects.raw("SELECT * FROM students_student WHERE age=35"):
+    #     print(s)
+    ##mapping 
+    # student_mapping = {'fname':'firstname','sname':'surname'}
+    # objs = Student.objects.raw("SELECT * FROM students_student",translations=student_mapping)
+    # print(objs)
+    sql = "SELECT * FROM students_student"
+    posts = Student.objects.raw(sql)[:2]
+    
+    # print(obj.query)
+    # print(connection.queries)
+    # print(obj)
     return render(request, 'output.html', {'data': obj})
 
 
