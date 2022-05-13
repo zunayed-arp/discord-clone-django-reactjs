@@ -120,6 +120,7 @@ def student_list(request):
     # r = cursor.fetchone()
     r = dictfetchall(cursor)
     print(r)
+    print(r)
     print(connection.queries)
     return render(request, 'output.html', {'data': r})
 

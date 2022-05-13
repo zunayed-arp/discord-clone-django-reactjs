@@ -47,7 +47,11 @@ class Books(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     
 class ISBN(Books):
-    books_ptr = models.OneToOneField(
+    """_summary_
+
+    Args:
+        Books (_type_): _description_
+    """    books_ptr = models.OneToOneField(
         Books,on_delete=models.CASCADE,
         parent_link=True,
         primary_key=True,
