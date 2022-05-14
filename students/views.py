@@ -119,8 +119,6 @@ def student_list(request):
     cursor.execute("SELECT * FROM students_student WHERE age > 20")
     # r = cursor.fetchone()
     r = dictfetchall(cursor)
-    print(r)
-    print(r)
     print(connection.queries)
     return render(request, 'output.html', {'data': r})
 
