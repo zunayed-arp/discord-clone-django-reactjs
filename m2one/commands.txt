@@ -1,0 +1,125 @@
+>> from m2m.models import Publication,Article
+>>> p1 = Publication(title='The Pyhton Journal')
+>>> p1.save()
+>>> p2 = Publication(title='Science News')
+>>> p2.save()
+>>> p3 = Publication(title='Science Weekly')
+>>> p3.save()
+>>> a1 = Article(headline='Django lets you build web apps easily')
+>>> a1.publications.add(p1)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "/home/zunayed/orm_live/venv/lib/python3.8/site-packages/django/db/models/fields/related_descriptors.py", line 586, in __get__
+    return self.related_manager_cls(instance)
+  File "/home/zunayed/orm_live/venv/lib/python3.8/site-packages/django/db/models/fields/related_descriptors.py", line 935, in __init__
+    raise ValueError(
+ValueError: "<Article: Django lets you build web apps easily>" needs to have a value for field "id" before this many-to-many relationship can be used.
+>>> a1.save()
+>>> a2 = Article(headline='NASA uses Python')
+>>> a2.save()
+>>> a2.publications.add(p1,p2)
+>>> a2.publications.add(p3)
+>>> a2.publications.add(p3)
+>>> new_publication = a2.publications.create(title='Highlights for children')
+>>> a1.publications.all()
+<QuerySet []>
+>>> a2.publications.all()
+<QuerySet [<Publication: Highlights for children>, <Publication: Science News>, <Publication: Science Weekly>, <Publication: The Pyhton Journal>]>
+>>> a1.publications.add(p2)
+>>> a1.publications.all()
+<QuerySet [<Publication: Science News>]>
+>>> p2.article_set.all()
+<QuerySet [<Article: NASA uses Python>, <Article: Django lets you build web apps easily>]>
+>>> a1.publications.all()
+<QuerySet [<Publication: Science News>]>
+>>> a1.publications.add(p1,p2)
+>>> a1.publications.all()
+<QuerySet [<Publication: Science News>, <Publication: The Pyhton Journal>]>
+>>> a1.publications.add(p1,p2,p3)
+>>> a1.publications.all()
+<QuerySet [<Publication: Science News>, <Publication: Science Weekly>, <Publication: The Pyhton Journal>]>
+>>> p1 = Publication.objects.create(title='Python Top Language')
+>>> p4 = Publication.objects.create(title='Python Top Language')
+>>> p4
+<Publication: Python Top Language>
+>>> a4 = Article.objects.create(headline='New World Order of Programming Languages') 
+>>> new_publication = a4.publications.create(headline='World order is setting by Python')
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "/home/zunayed/orm_live/venv/lib/python3.8/site-packages/django/db/models/fields/related_descriptors.py", line 1136, in create
+    new_obj = super(ManyRelatedManager, self.db_manager(db)).create(**kwargs)
+  File "/home/zunayed/orm_live/venv/lib/python3.8/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/zunayed/orm_live/venv/lib/python3.8/site-packages/django/db/models/query.py", line 512, in create
+    obj = self.model(**kwargs)
+  File "/home/zunayed/orm_live/venv/lib/python3.8/site-packages/django/db/models/base.py", line 559, in __init__
+    raise TypeError(
+TypeError: Publication() got an unexpected keyword argument 'headline'
+>>> new_publication = a4.publications.create(title='World order is setting by Python')
+>>> a4.publications.add(new_publications)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'new_publications' is not defined
+>>> a4.publications.add(new_publication)
+>>> a4.publications.all()
+<QuerySet [<Publication: World order is setting by Python>]>
+>>> a2.publications.all()
+<QuerySet [<Publication: Highlights for children>, <Publication: Science News>, <Publication: Science Weekly>, <Publication: The Pyhton Journal>]>
+>>> p2.article_set.all()
+<QuerySet [<Article: NASA uses Python>, <Article: Django lets you build web apps easily>]>
+>>> P1.article_set.all()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'P1' is not defined
+>>> p1.article_set.all()
+<QuerySet []>
+>>> Publication.objects.get(id=4).article_set.all()
+<QuerySet [<Article: NASA uses Python>]>
+>>> Publication.objects.get(id=3).article_set.all()
+<QuerySet [<Article: NASA uses Python>, <Article: Django lets you build web apps easily>]>
+>>> Article.objects.filter(publications__id=1)
+<QuerySet [<Article: NASA uses Python>, <Article: Django lets you build web apps easily>]>
+>>> Article.objects.filter(publications__id=1)
+<QuerySet [<Article: NASA uses Python>, <Article: Django lets you build web apps easily>]>
+>>> Article.objects.filter(publications__pk=1)
+<QuerySet [<Article: NASA uses Python>, <Article: Django lets you build web apps easily>]>
+>>> Article.objects.filter(publications=1)
+<QuerySet [<Article: NASA uses Python>, <Article: Django lets you build web apps easily>]>
+>>> Article.objects.filter(publications=p1)
+<QuerySet []>
+>>> Article.objects.filter(publications=p2)
+<QuerySet [<Article: NASA uses Python>, <Article: Django lets you build web apps easily>]>
+>>> Article.objects.filter(publications=p3)
+<QuerySet [<Article: NASA uses Python>, <Article: Django lets you build web apps easily>]>
+>>> Article.objects.filter(publications__title__startswith="Science")
+<QuerySet [<Article: NASA uses Python>, <Article: NASA uses Python>, <Article: Django lets you build web apps easily>, <Article: Django lets you build web apps easily>]>
+>>> Article.objects.filter(publications__title__startswith="Science").distinct()
+<QuerySet [<Article: NASA uses Python>, <Article: Django lets you build web apps easily>]>
+>>> Article.objects.filter(publications__title__startswith="Science").distinct().count()
+2
+>>> Article.objects.filter(publications__title__startswith="Science").count()
+4
+>>> Publication.objects.filter(id=1)
+<QuerySet [<Publication: The Pyhton Journal>]>
+>>> Publication.objects.filter(pk=1)
+<QuerySet [<Publication: The Pyhton Journal>]>
+>>> Publication.objects.filter(article__headline__startswith="NASA")
+<QuerySet [<Publication: Highlights for children>, <Publication: Science News>, <Publication: Science Weekly>, <Publication: The Pyhton Journal>]>
+>>> Publication.objects.filter(article__id=1)
+<QuerySet [<Publication: Science News>, <Publication: Science Weekly>, <Publication: The Pyhton Journal>]>
+>>> Article.objects.exclude(publications=p2)
+<QuerySet [<Article: New World Order of Programming Languages>]>
+>>> Article.objects.exclude(publications=p1)
+<QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>, <Article: New World Order of Programming Languages>]>
+>>> Article.objects.exclude(publications=p3)
+<QuerySet [<Article: New World Order of Programming Languages>]>
+>>> a5 = Article(headline='NASA finds intelligent life on Earth')
+>>> a5.save()
+>>> p2.article_set.add(a4)
+>>> p2.article_set.all()
+<QuerySet [<Article: NASA uses Python>, <Article: Django lets you build web apps easily>, <Article: New World Order of Programming Languages>]>
+>>> new_article1 = p2.article_set.create(headline='Oxygen-free diet works wonders')
+>>> a6 = p2.article_set.all()[1]
+>>> a6
+<Article: Django lets you build web apps easily>
+>>> 
