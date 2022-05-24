@@ -1,6 +1,4 @@
 
-from venv import create
-from weakref import proxy
 from django.db import models
 from pytz import timezone
 
@@ -51,7 +49,8 @@ class ISBN(Books):
 
     Args:
         Books (_type_): _description_
-    """    books_ptr = models.OneToOneField(
+    """   
+    books_ptr = models.OneToOneField(
         Books,on_delete=models.CASCADE,
         parent_link=True,
         primary_key=True,
