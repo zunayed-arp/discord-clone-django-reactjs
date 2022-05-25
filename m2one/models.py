@@ -14,7 +14,7 @@ class Reporter(models.Model):
 class Article(models.Model):
     headline = models.CharField(max_length=100)
     pub_date = models.DateField()
-    reporter = models.ForeignKey(Reporter, on_delete=models.CASCADE)
+    reporter = models.ForeignKey(Reporter, on_delete=models.CASCADE,related_name="repoters")
 
     class meta:
         ordering = ['headline']
