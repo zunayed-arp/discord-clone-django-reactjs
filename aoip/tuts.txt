@@ -1,1 +1,1 @@
-https://docs.djangoproject.com/en/4.0/topics/db/examples/many_to_many/
+https://www.sankalpjonna.com/learn-django/the-right-way-to-use-a-manytomanyfield-in-django
