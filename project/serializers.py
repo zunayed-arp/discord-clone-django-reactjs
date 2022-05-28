@@ -1,4 +1,3 @@
-from dataclasses import fields
 from rest_framework import serializers
 from .models import IpList,AllowOrigin
 from django.contrib.auth import get_user_model
@@ -26,10 +25,11 @@ class AllowOriginSerializer(serializers.ModelSerializer):
  
         
 class AllowOriginAPIViewSerializer(serializers.ModelSerializer):
-    ip_list = IpListSerializer(many=True)
+    ip_list = IpListSerializer(many=True,write_only=True)
     class Meta:
         model = AllowOrigin
-        fields = ('id','ip_list','user')
+        fields = '__all__'
+        # extra_kwargs = {'ip_list': {'write_only': True}}
         
     def create(self, validated_data):
         ips_data = validated_data.pop('ip_list')
@@ -60,7 +60,27 @@ class AllowOriginAPIViewSerializer(serializers.ModelSerializer):
             except KeyError:
                 pass
         instance.save()
-        return instance   
+        return instance  
+    
+    def to_representation(self, instance):
+        aa = AllowOrigin.objects.filter(user__username =instance)
+        ips_data = IpList.objects.filter(alloworigin__user__username=instance).distinct()
+        print(ips_data)
+        
+        # for x in bb:
+        #     print(x.ip)
+        
+        
+        # seriz = IpListSerializer(ips_data,many=True)
+        # print(seriz.data)
+    
+        
+        # for x in aa:
+        #     print(x.is_active)
+            
+        response =  super().to_representation(instance)
+        response['ips'] = IpListSerializer(ips_data,many=True).data
+        return response
             
     # def create_or_update_packages(self, packages):
     #     package_ids = []

@@ -4,7 +4,6 @@ from . import views
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-#urls
 router.register('alloworign', views.AllowOriginViewSet)
 router.register('iplist', views.IpListViewSet)
 router.register('user', views.UserViewSet)

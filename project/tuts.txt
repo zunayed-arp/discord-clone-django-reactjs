@@ -1,0 +1,6 @@
+https://stackoverflow.com/questions/21148039/how-to-make-a-patch-request-using-django-rest-framework
+
+
+
+#m2m
+https://stackoverflow.com/questions/61537923/update-manytomany-relationship-in-django-rest-framework

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'm2one',
     'aoip',
+    'project',
 ]
 
 MIDDLEWARE = [
