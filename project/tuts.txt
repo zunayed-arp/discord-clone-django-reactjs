@@ -4,3 +4,10 @@ https://stackoverflow.com/questions/21148039/how-to-make-a-patch-request-using-d
 
 #m2m
 https://stackoverflow.com/questions/61537923/update-manytomany-relationship-in-django-rest-framework
+
+
+
+#
+https://www.django-rest-framework.org/api-guide/relations/#custom-relational-fields
+#related fields 
+https://stackoverflow.com/questions/33182092/django-rest-framework-serializing-many-to-many-field
