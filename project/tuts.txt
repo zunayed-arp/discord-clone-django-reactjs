@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/56790335/many-to-many-field-and-nested-serializer-in-rest-overwriting-nested-serializer
