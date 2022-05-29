@@ -39,10 +39,7 @@ class AllowOriginAPIView(APIView):
         except AllowOrigin.DoesNotExist:
             raise Http404
 
-    #    def get(self, request, pk, format=None):
-    #     snippet = self.get_object(pk)
-    #     serializer = SnippetSerializer(snippet)
-    #     return Response(serializer.data)
+   
 
     def get(self, request, id=None, *args, **kwargs):
         if id:
