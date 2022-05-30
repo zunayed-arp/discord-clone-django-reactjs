@@ -51,6 +51,7 @@ class AllowOriginAPIViewSerializer(serializers.ModelSerializer):
         
     def update(self, instance, validated_data):
         ip_list = validated_data.pop('ip_list',[])
+        print('ipp_list_serializer',ip_list)
         instance.ip_list.set(self.create_or_update_allow_orign(ip_list))
         
         fields = ['user','is_active']
