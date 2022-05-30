@@ -16,3 +16,15 @@ https://stackoverflow.com/questions/33182092/django-rest-framework-serializing-m
 #m2m example for self update nested
 
 https://karthiksharma1411.medium.com/put-request-to-django-api-to-update-list-of-nested-objects-with-many-to-many-relationships-f487cba97632
+
+
+#updatable nested serializers
+https://riptutorial.com/django-rest-framework/example/25521/updatable-nested-serializers
+
+
+https://stackoverflow.com/questions/53703734/update-method-on-django-rest-framework-nested-serializer-for-m2m-fields
+
+
+
+
+https://www.google.com/search?q=m2m+field+update+in+django+nested+serializer+site:stackoverflow.com&sxsrf=ALiCzsb80412nQosw-DlwLGDCIbqQRzBoQ:1653937623080&sa=X&ved=2ahUKEwidiYTk9Yf4AhV4UGwGHWkdAhQQrQIoBHoECBMQBQ&biw=1366&bih=668&dpr=1
