@@ -1,5 +1,5 @@
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets
@@ -7,7 +7,7 @@ from .serializers import AllowOriginAPIViewSerializer, IpListSerializer, UserSer
 from project.models import AllowOrigin, IpList
 from django.contrib.auth import get_user_model
 
-#user
+# user
 User = get_user_model()
 
 
@@ -36,10 +36,9 @@ class AllowOriginAPIView(APIView):
     def get_object(self, pk):
         try:
             return AllowOrigin.objects.get(pk=pk)
+            # return get_object_or_404(AllowOrigin,pk)
         except AllowOrigin.DoesNotExist:
             raise Http404
-
-   
 
     def get(self, request, id=None, *args, **kwargs):
         if id:
@@ -66,11 +65,12 @@ class AllowOriginAPIView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    
+
     def patch(self, request, id=None):
         allow_origin = self.get_object(id)
-        serializer = AllowOriginAPIViewSerializer(allow_origin, data=request.data, partial=True) # set partial=True to update a data partially
+        # set partial=True to update a data partially
+        serializer = AllowOriginAPIViewSerializer(
+            allow_origin, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

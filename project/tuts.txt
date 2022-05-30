@@ -11,3 +11,8 @@ https://stackoverflow.com/questions/61537923/update-manytomany-relationship-in-d
 https://www.django-rest-framework.org/api-guide/relations/#custom-relational-fields
 #related fields 
 https://stackoverflow.com/questions/33182092/django-rest-framework-serializing-many-to-many-field
+
+
+#m2m example for self update nested
+
+https://karthiksharma1411.medium.com/put-request-to-django-api-to-update-list-of-nested-objects-with-many-to-many-relationships-f487cba97632
