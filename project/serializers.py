@@ -51,7 +51,7 @@ class AllowOriginAPIViewSerializer(serializers.ModelSerializer):
         
     def update(self, instance, validated_data):
         ip_list = validated_data.pop('ip_list',[])
-        print('ipp_list_serializer',ip_list)
+        # print('ipp_list_serializer',ip_list)
         instance.ip_list.set(self.create_or_update_allow_orign(ip_list))
         
         fields = ['user','is_active']
@@ -66,7 +66,7 @@ class AllowOriginAPIViewSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         aa = AllowOrigin.objects.filter(user__username =instance)
         ips_data = IpList.objects.filter(alloworigin__user__username=instance).distinct()
-        print(ips_data)
+        # print(ips_data)
         
         # for x in bb:
         #     print(x.ip)

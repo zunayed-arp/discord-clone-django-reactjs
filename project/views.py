@@ -1,3 +1,4 @@
+from http import client
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 from rest_framework.views import APIView
@@ -6,6 +7,7 @@ from rest_framework import status, viewsets
 from .serializers import AllowOriginAPIViewSerializer, IpListSerializer, UserSerializer, AllowOriginSerializer
 from project.models import AllowOrigin, IpList
 from django.contrib.auth import get_user_model
+from ipware import get_client_ip,ip
 
 # user
 User = get_user_model()
@@ -41,6 +43,11 @@ class AllowOriginAPIView(APIView):
             raise Http404
 
     def get(self, request, id=None, *args, **kwargs):
+        
+        client_ip,is_routeable = get_client_ip(request)
+        print('client_ip','is_routeable',client_ip,is_routeable) 
+        
+        
         if id:
             allow_origin = self.get_object(id)
             serializer = AllowOriginAPIViewSerializer(allow_origin)
