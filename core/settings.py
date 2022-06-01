@@ -38,9 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'm2one',
-    'aoip',
-    'project',
+    'nestedm2m',
 ]
 
 MIDDLEWARE = [

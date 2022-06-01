@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/68443223/django-rest-framework-update-nested-serializer-by-id
