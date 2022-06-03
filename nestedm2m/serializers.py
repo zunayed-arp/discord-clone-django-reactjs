@@ -112,6 +112,23 @@ class RecipeUpdateSerializer(serializers.ModelSerializer):
     
     
     def to_internal_value(self, data):
-        recipie_id = data.get('id')
-        
+        recipe_id = data.get('id')
+        if self.check_is_new_recipe(recipe_id):
+            return super().to_internal_value(data)
+        self.save_data(recipe_id,data)
         return super().to_internal_value(data)
+          
+    def check_is_new_recipe(self, recipe_id):
+        return not recipe_id
+    
+    
+    def save(self,recipe_id ,data,**kwargs):
+        from nestedm2m.utils.utility import Utils
+        recipe = Recipe.objects.filter(id=recipe_id).first()
+        
+        ingredients_data = Utils.listify(data.get('ingredients'))
+        
+        return super().save(**kwargs)
+    
+    
+    # https://stackoverflow.com/questions/40143267/updating-an-manytomany-field-with-django-rest
