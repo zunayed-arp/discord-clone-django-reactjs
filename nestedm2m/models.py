@@ -15,3 +15,21 @@ class AllowOrigin(models.Model):
 
     def __str__(self) -> str:
         return self.ip_list.ip
+    
+    
+    
+class Ingredient(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class Recipe(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+    directions = models.TextField()
+    ingredients = models.ManyToManyField(Ingredient)
+
+    def __str__(self):
+        return self.name

@@ -8,6 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('ip/',include('aoip.urls')),
     # path('',include('project.urls')),
+    path('',include('nestedm2m.urls')),
     
     # path('student/',include('students.urls', namespace='student')),
     #  path('__debug__/', include('debug_toolbar.urls')),

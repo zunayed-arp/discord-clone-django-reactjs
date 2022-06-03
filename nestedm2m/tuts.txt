@@ -1,1 +1,21 @@
 https://stackoverflow.com/questions/68443223/django-rest-framework-update-nested-serializer-by-id 
+
+
+
+https://stackoverflow.com/questions/41312558/django-rest-framework-post-nested-objects
+
+
+#imp tuts
+https://stackoverflow.com/questions/62422997/update-m2m-foreignkey-field-to-model-does-not-work-in-drf
+
+
+https://stackoverflow.com/questions/50625057/nested-serializer-for-many-to-many
+
+
+
+https://stackoverflow.com/questions/40143267/updating-an-manytomany-field-with-django-rest
+
+
+
+##making of order dict
+https://stackoverflow.com/questions/36189303/django-rest-framework-receive-primary-key-value-in-post-and-return-model-object
