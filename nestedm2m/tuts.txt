@@ -19,3 +19,10 @@ https://stackoverflow.com/questions/40143267/updating-an-manytomany-field-with-d
 
 ##making of order dict
 https://stackoverflow.com/questions/36189303/django-rest-framework-receive-primary-key-value-in-post-and-return-model-object
+
+
+#multiple serializer in single model viewset
+https://stackoverflow.com/questions/22616973/django-rest-framework-use-different-serializers-in-the-same-modelviewset
+
+
+#https://stackoverflow.com/questions/24809737/how-do-i-set-different-serializer-for-list-and-detail-view-with-django-rest-fram?noredirect=1&lq=1
