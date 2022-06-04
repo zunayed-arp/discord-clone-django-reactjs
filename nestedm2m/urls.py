@@ -9,5 +9,5 @@ router.register('recipie',views.RecipieView)
 
 
 urlpatterns = [
-    path('allow-origin/',views.AllowOriginAPIView.as_view())
+    path('allow-origin/',views.AllowOriginAPIView.as_view()),
 ]+router.urls
