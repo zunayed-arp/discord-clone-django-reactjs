@@ -23,6 +23,8 @@ class RecipieView(viewsets.ModelViewSet):
             return RecipeCreateSerializer
         if self.action == 'update':
             return RecipeUpdateSerializer
+        if self.action =='partial_update':
+            return Response({'hell':'hi'})
         return RecipeMainSerializer
 
 

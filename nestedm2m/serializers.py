@@ -44,6 +44,10 @@ class RecipeMainSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = '__all__'
+    
+    def to_representation(self, instance):
+        print('instance',instance)
+        return super().to_representation(instance)
 
 
 class RecipeCreateSerializer(RecipeMainSerializer):
@@ -84,12 +88,36 @@ class RecipeCreateSerializer(RecipeMainSerializer):
 class RecipeUpdateSerializer(serializers.ModelSerializer):
 
     ingredients = IngredientSerializer(many=True, read_only=False)
-
     class Meta:
         model = Recipe
         fields = '__all__'
 
     def update(self, instance, validated_data):
+        print('validated_data',validated_data)
+        print('instance', instance)
+        ingredients_data = validated_data.pop('ingredients')
+        instance = super(RecipeUpdateSerializer, self).update(
+            instance, validated_data)
+        for ingredient_data in ingredients_data:
+            ingredient_qs = Ingredient.objects.filter(
+                name__iexact=ingredient_data['name'])
+            if ingredient_qs.exists():
+                ingredients = ingredient_qs.first()
+            else:
+                ingredients = Ingredient.objects.create(**ingredient_data)
+
+            instance.ingredients.add(ingredients)
+        return instance
+class RecipePartialUpdateSerializer(serializers.ModelSerializer):
+
+    ingredients = IngredientSerializer(many=True, read_only=False)
+    class Meta:
+        model = Recipe
+        fields = '__all__'
+
+    def update(self, instance, validated_data):
+        print('validated_data',validated_data)
+        print('instance', instance)
         ingredients_data = validated_data.pop('ingredients')
         instance = super(RecipeUpdateSerializer, self).update(
             instance, validated_data)
