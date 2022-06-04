@@ -26,3 +26,6 @@ https://stackoverflow.com/questions/22616973/django-rest-framework-use-different
 
 
 #https://stackoverflow.com/questions/24809737/how-do-i-set-different-serializer-for-list-and-detail-view-with-django-rest-fram?noredirect=1&lq=1
+
+
+https://github.com/Ronik22/Django_Social_Network_App ## important project
