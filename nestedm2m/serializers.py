@@ -2,6 +2,8 @@ from dataclasses import fields
 from unicodedata import name
 from venv import create
 from wsgiref.validate import validator
+
+from nestedm2m.utils.utility import Utils
 from .models import IpList, AllowOrigin, Recipe, Ingredient
 from rest_framework import serializers
 
@@ -79,28 +81,6 @@ class RecipeCreateSerializer(RecipeMainSerializer):
 #     class Meta:
 #         model = Recipe
 #         fields = '__all__'
-class RecipeUpdateSerializer(serializers.ModelSerializer):
-
-    ingredients = IngredientSerializer(many=True, read_only=False)
-
-    class Meta:
-        model = Recipe
-        fields = '__all__'
-
-    def update(self, instance, validated_data):
-        ingredients_data = validated_data.pop('ingredients')
-        instance = super(RecipeUpdateSerializer, self).update(
-            instance, validated_data)
-        for ingredient_data in ingredients_data:
-            ingredient_qs = Ingredient.objects.filter(
-                name__iexact=ingredient_data['name'])
-            if ingredient_qs.exists():
-                ingredients= ingredient_qs.first()
-            else:
-                ingredients = Ingredient.objects.create(**ingredient_data)
-
-            instance.ingredients.add(ingredients)
-        return instance
 # class RecipeUpdateSerializer(serializers.ModelSerializer):
 
 #     ingredients = IngredientSerializer(many=True, read_only=False)
@@ -109,26 +89,49 @@ class RecipeUpdateSerializer(serializers.ModelSerializer):
 #         model = Recipe
 #         fields = '__all__'
 
+#     def update(self, instance, validated_data):
+#         ingredients_data = validated_data.pop('ingredients')
+#         instance = super(RecipeUpdateSerializer, self).update(
+#             instance, validated_data)
+#         for ingredient_data in ingredients_data:
+#             ingredient_qs = Ingredient.objects.filter(
+#                 name__iexact=ingredient_data['name'])
+#             if ingredient_qs.exists():
+#                 ingredients= ingredient_qs.first()
+#             else:
+#                 ingredients = Ingredient.objects.create(**ingredient_data)
+
+#             instance.ingredients.add(ingredients)
+#         return instance
+class RecipeUpdateSerializer(serializers.ModelSerializer):
+
+    ingredients = IngredientSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Recipe
+        fields = '__all__'
+
+    def to_internal_value(self, data):
+        recipe_id = data.get('id')
+
+        if self.check_is_new_recipe(recipe_id):
+            return super().to_internal_value(data)
+        self.save_data(recipe_id, data)
+
+        return super().to_internal_value(data)
+
+    def check_is_new_recipe(self, recipe_id):
+        return not recipe_id
     
     
-    # def to_internal_value(self, data):
-    #     recipe_id = data.get('id')
-    #     if self.check_is_new_recipe(recipe_id):
-    #         return super().to_internal_value(data)
-    #     self.save_data(recipe_id,data)
-    #     return super().to_internal_value(data)
-          
-    # def check_is_new_recipe(self, recipe_id):
-    #     return not recipe_id
-    
-    
-    # def save_data(self,recipe_id ,data,**kwargs):
-    #     from nestedm2m.utils.utility import Utils
-    #     recipe = Recipe.objects.filter(id=recipe_id).first()
+    def save_data(self,recipe_id,data):
+        recipe = Recipe.objects.filter(id=recipe_id).first()
+        recipes_data = Utils.listify(data.get('ingredients'))
         
-    #     ingredients_data = Utils.listify(data.get('ingredients'))
-        
-    #     return super().save(**kwargs)
-    
-    
+        for recipe_data in recipes_data:
+            ingredient_qs = Ingredient.objects.filter(name__iexact=recipe_data['name'])
+            if ingredient_qs.exists():
+                ingredient = ingredient_qs.first()
+                Recipe.ingredients.add(ingredient)
+
     # https://stackoverflow.com/questions/40143267/updating-an-manytomany-field-with-django-rest
