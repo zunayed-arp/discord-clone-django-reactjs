@@ -1,1 +1,0 @@
-https://www.sankalpjonna.com/learn-django/the-right-way-to-use-a-manytomanyfield-in-django

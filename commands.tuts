@@ -1,9 +1,0 @@
-
-
-=>>print(obj.query)->>result
-SELECT "students_student"."id", "students_student"."firstname", "students_student"."surname", "students_student"."age", "students_student"."classroom", "students_student"."teacher" FROM "students_student"
-
-=>
-from django.db import connection
-=>connection.queries
-[{'sql': 'SELECT "students_student"."id", "students_student"."firstname", "students_student"."surname", "students_student"."age", "students_student"."classroom", "students_student"."teacher" FROM "students_student" LIMIT 21', 'time': '0.001'}]
