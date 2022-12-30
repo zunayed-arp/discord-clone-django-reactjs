@@ -20,12 +20,16 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 def SignupAPI(request):
     if request.method == 'POST':
         serializer = SignupSerializer(data=request.data)
+        print(serializer)
         if serializer.is_valid():
             user = serializer.save()
             created,token = AuthToken.objects.create(user)
             return Response({
               'user':status.HTTP_201_CREATED,
-              'token':token  
+              'token':token,
+              'username':request.data.get('username'),
+              'da':serializer.data
+                
             })
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     
