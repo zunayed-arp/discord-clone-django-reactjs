@@ -15,6 +15,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 
 
+#signup api
+
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def SignupAPI(request):
